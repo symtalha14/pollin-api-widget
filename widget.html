@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./widget.js"></script>
+
+</head>
+
+<body>
+    <h2>My Beautiful Webpage</h2>
+
+
+    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur odio illum vel cumque laboriosam dolores mollitia quis repellendus hic reiciendis animi fugiat quas natus vero optio sint eaque, repudiandae aperiam in est voluptate molestiae placeat
+        fugit. Quo doloremque perspiciatis ad reprehenderit quae vero temporibus et tempore neque consequatur, eos saepe delectus, a ipsum nisi vel fuga impedit officiis amet illo numquam esse! Ipsam architecto ea expedita omnis molestias? Consequatur
+        magni corporis dolores architecto! Vel, animi! Quidem, sapiente cumque odit temporibus voluptatibus aut vitae sit neque perspiciatis tempore sed. Voluptatem voluptas saepe quo quia deserunt iure natus id, excepturi labore eum optio sunt ipsa!
+        Consequuntur impedit atque esse unde dolor. At impedit sed ea aliquid architecto cum ipsum vero fugiat recusandae! Ut, quia blanditiis neque eius eaque minima odit laboriosam fugiat debitis ratione doloribus iure culpa ullam provident rem repudiandae.
+        Ullam mollitia, cupiditate ipsum cum vero dolores ratione omnis quos aliquam molestiae odio eum doloremque fuga harum autem delectus expedita doloribus accusantium in soluta voluptas exercitationem molestias. Corporis blanditiis harum exercitationem
+        quasi deleniti magni odio, veritatis mollitia nesciunt magnam? Impedit earum sit nobis, amet repudiandae eveniet incidunt dolorum vero iste corrupti molestias beatae esse facere optio asperiores delectus ex corporis? Voluptatibus.</p>
+    <div data-widget>
+        <div class="pie">
+
+        </div>
+    </div>
+    <style>
+        .pie {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            border-radius: 100%;
+            overflow: hidden;
+            padding: 5px;
+            /* border: 2px solid gray; */
+            /* background: darkgray; */
+        }
+        /* 90+30+140+100 --> */
+        /* 30 90 90+10 90+50 */
+        
+        .percentage {
+            font-size: 13px;
+            color: black;
+            box-shadow: 0 0 3px 1px gray;
+            position: relative;
+            z-index: 100;
+            left: 50px;
+            background: #fff;
+            padding: 5px;
+            border-radius: 45%;
+            font-family: sans-serif;
+            font-weight: bold;
+        }
+        
+        .pie_segment:before {
+            content: "22%";
+            margin: 0;
+            color: #fff;
+            padding: 0;
+            text-align: left;
+            /* color: #fff; */
+            width: 100%;
+            height: 100%;
+            background: var(--bg);
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: bottom right;
+            transform: translate(-50%, -50%) rotate( calc((var(--offset) + var(--value))*1deg));
+        }
+        /* .pie_segment:nth-child(5):before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: red;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: bottom right;
+            transform: translate(-50%, -50%) rotate(180deg);
+        }
+
+        .pie_segment:nth-child(4):before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: blue;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: bottom right;
+            transform: translate(-50%, -50%) rotate(270deg);
+        }
+
+
+        .pie_segment:nth-child(3):before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: blue;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: bottom right;
+            transform: translate(-50%, -50%) rotate(360deg);
+        }
+
+        .pie_segment:nth-child(2):before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: yellow;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: bottom right;
+            transform: translate(-50%, -50%) rotate(330deg);
+        }
+
+        .pie_segment:nth-child(1):before {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background: green;
+            position: absolute;
+            top: 0;
+            left: 0;
+            transform-origin: bottom right;
+            transform: translate(-50%, -50%) rotate(360deg);
+        } */
+    </style>
+    <script>
+        window.onload = function() {
+            var widget = new myWidget({
+                width: 500,
+                height: 250,
+                border: true,
+                type: 'piechart',
+                result: true,
+            });
+
+        }
+    </script>
+</body>
+
+</html>
