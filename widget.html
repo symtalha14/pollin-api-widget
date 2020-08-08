@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./widget.js"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Nanum+Gothic&family=Recursive&family=Red+Rose&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -19,37 +19,115 @@
         Consequuntur impedit atque esse unde dolor. At impedit sed ea aliquid architecto cum ipsum vero fugiat recusandae! Ut, quia blanditiis neque eius eaque minima odit laboriosam fugiat debitis ratione doloribus iure culpa ullam provident rem repudiandae.
         Ullam mollitia, cupiditate ipsum cum vero dolores ratione omnis quos aliquam molestiae odio eum doloremque fuga harum autem delectus expedita doloribus accusantium in soluta voluptas exercitationem molestias. Corporis blanditiis harum exercitationem
         quasi deleniti magni odio, veritatis mollitia nesciunt magnam? Impedit earum sit nobis, amet repudiandae eveniet incidunt dolorum vero iste corrupti molestias beatae esse facere optio asperiores delectus ex corporis? Voluptatibus.</p>
+    <span class="percentage"></span>
     <div data-widget>
-        <div class="pie">
 
-        </div>
+
     </div>
+
     <style>
+        div[data-widget] {
+            height: fit-content !important;
+            padding: 15px;
+            display: flex;
+            position: relative;
+            justify-content: space-evenly;
+            background: #ffffff;
+        }
+        
+        hr {
+            background: darkgray;
+            height: 1px;
+            border: none;
+            width: 100%;
+        }
+        
         .pie {
-            width: 200px;
-            height: 200px;
+            width: 180px;
+            height: 180px;
             position: relative;
             border-radius: 100%;
             overflow: hidden;
             padding: 5px;
-            /* border: 2px solid gray; */
-            /* background: darkgray; */
         }
-        /* 90+30+140+100 --> */
-        /* 30 90 90+10 90+50 */
+        
+        .credit-link {
+            position: absolute;
+            bottom: 5px;
+            text-decoration: none;
+            font-family: "Nanum Gothic", sans-serif;
+            color: darkslategray;
+            font-weight: bold;
+            font-size: 11px;
+            right: 10px;
+        }
+        
+        .credit-link a {
+            text-decoration: none;
+            color: darkslategray;
+        }
+        
+        .title {
+            font-family: "Nanum Gothic", sans-serif;
+            font-size: 12px;
+            margin: 10px;
+            max-width: 100%;
+            font-weight: bold;
+        }
+        
+        .title-2 {
+            font-family: "Nanum Gothic", sans-serif;
+            font-size: 14px;
+            margin: 10px;
+            width: 100%;
+            justify-self: flex-start;
+            max-width: 100%;
+            font-weight: bold;
+            float: left;
+        }
+        
+        .legend {
+            width: 50%;
+            list-style: none;
+            min-height: 100%;
+        }
+        
+        .legend .color_box {
+            width: 12px;
+            height: 12px;
+            display: block;
+            padding: 5px;
+            box-sizing: border-box;
+            margin-right: 5px;
+            border: 1px solid lightgray;
+        }
+        
+        .legend ul li {
+            display: flex;
+            align-items: center;
+            font-family: "Nanum Gothic", sans-serif;
+            font-weight: lighter;
+            font-size: 12px;
+            width: max-content;
+            max-width: 200px;
+            line-height: 1.17em;
+        }
         
         .percentage {
             font-size: 13px;
             color: black;
-            box-shadow: 0 0 3px 1px gray;
-            position: relative;
+            box-shadow: 0 0 2px 1px gray;
+            position: absolute;
             z-index: 100;
-            left: 50px;
+            /* margin: 100px; */
+            /* left: 50px; */
             background: #fff;
-            padding: 5px;
+            padding: 7px;
             border-radius: 45%;
-            font-family: sans-serif;
-            font-weight: bold;
+            font-family: 'Recursive', sans-serif;
+            /* font-weight: bold; */
+            display: none;
+            transition: all .1s ease-in-out;
         }
         
         .pie_segment:before {
@@ -65,69 +143,91 @@
             position: absolute;
             top: 0;
             left: 0;
+            box-shadow: 0px -1px 2px 1px #242121d6;
             transform-origin: bottom right;
             transform: translate(-50%, -50%) rotate( calc((var(--offset) + var(--value))*1deg));
         }
-        /* .pie_segment:nth-child(5):before {
-            content: "";
-            width: 100%;
-            height: 100%;
-            background: red;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform-origin: bottom right;
-            transform: translate(-50%, -50%) rotate(180deg);
+        
+        .pie_segment:hover {
+            cursor: pointer;
         }
-
-        .pie_segment:nth-child(4):before {
-            content: "";
-            width: 100%;
-            height: 100%;
-            background: blue;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform-origin: bottom right;
-            transform: translate(-50%, -50%) rotate(270deg);
+        
+        .pie_segment:before:nth-last-child() {
+            box-shadow: none !important;
         }
-
-
-        .pie_segment:nth-child(3):before {
-            content: "";
-            width: 100%;
-            height: 100%;
-            background: blue;
+        
+        .info-text {
+            text-align: center;
             position: absolute;
-            top: 0;
-            left: 0;
-            transform-origin: bottom right;
-            transform: translate(-50%, -50%) rotate(360deg);
+            top: 50%;
+            font-family: "Recursive", sans-serif;
+            color: rgb(2, 101, 134);
+            border: 1px solid rgb(2, 101, 134);
+            padding: 5px;
+            background: rgb(219, 232, 236);
         }
-
-        .pie_segment:nth-child(2):before {
-            content: "";
-            width: 100%;
-            height: 100%;
-            background: yellow;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform-origin: bottom right;
-            transform: translate(-50%, -50%) rotate(330deg);
+        
+        .list-grid li {
+            text-transform: normal;
+            border-radius: 6px;
+            border: 1px solid lightgray;
+            background: rgb(252, 251, 253);
+            list-style: none;
         }
-
-        .pie_segment:nth-child(1):before {
-            content: "";
-            width: 100%;
-            height: 100%;
-            background: green;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform-origin: bottom right;
-            transform: translate(-50%, -50%) rotate(360deg);
-        } */
+        
+        .list-group li {
+            background: rgb(255, 255, 255);
+            border-bottom: 1px solid lightgray;
+            margin-bottom: 4px;
+            padding: 8px;
+            max-width: 250px;
+            height: fit-content;
+            font-family: sans-serif;
+            font-size: 12px;
+        }
+        
+        .list-group li:hover {
+            color: darkblue;
+        }
+        
+        .list-group li::first-letter {
+            text-transform: uppercase;
+        }
+        
+        .list-group {
+            margin-bottom: 30px;
+        }
+        
+        .vote-radio-btn {
+            display: none;
+        }
+        
+        .vote-radio-btn:checked+label {
+            color: darkblue;
+            font-weight: bold;
+        }
+        
+        .list-grid li:hover {
+            border: 1px solid lightgreen;
+            cursor: pointer;
+        }
+        
+        .submit-btn {
+            width: 265px;
+            padding: 5px;
+            background: transparent;
+            border: 1px solid rgb(2, 101, 134);
+            color: rgb(2, 101, 134);
+            border-radius: 5px;
+            font-family: "Nanum Gothic", sans-serif;
+            transition: all .3s ease-in-out;
+        }
+        
+        .submit-btn:hover {
+            background: rgb(2, 101, 134);
+            color: #ffffff;
+            cursor: pointer;
+        }
     </style>
     <script>
         window.onload = function() {
@@ -135,7 +235,7 @@
                 width: 500,
                 height: 250,
                 border: true,
-                type: 'piechart',
+                type: 'poll',
                 result: true,
             });
 
