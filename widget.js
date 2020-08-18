@@ -35,7 +35,7 @@
 
     }
 
-    function toPieChart(dataArr, choices, title, $, w, h) {
+    function toPieChart(dataArr, choices, title, $, w, h, total_votes) {
         var items = dataArr;
         var color_codes_legend = [];
         var color_codes = [];
@@ -46,7 +46,7 @@
         var span_title = $("<p class='title'></p>");
         span_title.text(title);
         legend.append(span_title);
-        legend.append("<hr></hr>");
+        legend.append("<hr>");
 
 
         function toDegrees(percentage) {
@@ -77,28 +77,39 @@
         var segments = [];
         var total_parts = 0;
         var total_segments = 0;
+        var items_arr = [];
         items.map(item => {
-            percentages.push(item.percentage);
+            items_arr.push(item.percentage);
+
             values.push(toDegrees(item.percentage));
         });
+
         console.log(percentages);
         values.sort((a, b) => { return b - a });
         console.log("Values:", values);
         values.map(value => {
             var parts = [];
             var wholes = Math.floor(value / 90);
+            if (value) {
 
-            while (wholes > 0) {
-                parts.push(90);
-                wholes--;
+                let ind = values.indexOf(value);
+                percentages.push(items.sort((a, b) => {
+                    return b["percentage"] - a["percentage"];
+                })[ind]['percentage']);
+                while (wholes > 0) {
+                    parts.push(90);
+                    wholes--;
+
+                }
+                if ((value % 90) != 0) {
+                    parts.push(value % 90);
+                }
+
+                segments.push(parts);
+                total_parts += parts.length;
+                var color = randomColor();
+                color_codes.push(color);
             }
-            if ((value % 90) != 0) {
-                parts.push(value % 90);
-            }
-            segments.push(parts);
-            total_parts += parts.length;
-            var color = randomColor();
-            color_codes.push(color);
         });
         console.log(choices);
         choices.map((choice, index) => {
@@ -123,14 +134,17 @@
 
             segments[c].map((segment) => {
                 // parts
+
                 var segmentDOM = $('<div class="pie_segment"></div>');
+
                 segmentDOM[0].style.setProperty("--bg", color_codes[c]);
 
                 // var percentage = $('<span class="percentage">' + items[c].percentage + '%</span>');
 
                 segmentDOM[0].style.setProperty("--offset", offset);
                 segmentDOM[0].style.setProperty("--value", segment);
-                segmentDOM[0].style.setProperty("--percentage", percentages[c]);
+                console.log("percentage[c]: ", percentages[c]);
+                segmentDOM[0].style.setProperty("--percentage", percentages[c].toString().match(/\d+\.\d{1}/)[0]);
                 offset += segment;
                 segmentDOM[0].addEventListener("click", (e) => {
                     console.log(c);
@@ -168,23 +182,34 @@
         console.log(values, "segmentss", segments, color_codes, total_segments);
 
     }
+    var record = undefined;
 
     function fetchResults($) {
-        var data = [
-            { 'percentage': 35 },
-            { 'percentage': 25 },
-            { 'percentage': 20 },
-            { 'percentage': 20 }
+        var data = [];
+        var choices = record["choices"]
+        var total_votes = choices.reduce((total, elem) => {
+            return total + elem[2];
+        }, 0);
+        var sorted_choices = choices.sort((a, b) => { return b[2] - a[2] });
+        console.log("Sorted: ", sorted_choices);
+        console.log("Total ", total_votes);
+        let choices_arr = Array.prototype.slice.call(sorted_choices).map(ch => {
+            data.push({ "percentage": ((ch[2] / total_votes) * 100) });
+            return ch[0];
+        });
 
-        ]
-        toPieChart(data, ['Washing hands regularly after every activity.', 'Going out in the crtoewads', 'C', 'D'], 'What measures are you taking against the Coronavirus?', $, 400, 400);
+        console.log("Data", data);
+        console.log(choices_arr);
+        toPieChart(data, choices_arr, record["title"], $, 400, 400, total_votes);
+
     }
 
-    function fetchPoll($) {
+    function initPoll($, config) {
         var widget = $('[data-widget]');
         var selected_choice = "";
-        var choices = ['sdfg', 'asdfm', 'Washing hands regularly after every activity.', 'Going out in the crtoewads', 'C', 'D'];
-        var title = 'What measures are you taking against the Coronavirus?';
+
+        var choices = record['choices'].map(ch => { return ch[0] });
+        var title = record["title"];
         var span_title = $("<p class='title-2'></p>");
         span_title.text(title);
         widget.append(span_title);
@@ -207,14 +232,64 @@
             });
             li.text(choice);
             choice_List.append(li);
-        })
-        var submit_btn = $("<button class='submit-btn'>Submit Response</button>");
+        });
 
+        var submit_btn = $("<button class='submit-btn'>Submit Response</button>");
+        submit_btn[0].addEventListener("click", (e) => {
+            record["choices"].map(ch => {
+                if (ch[0] == selected_choice) {
+                    var selected = ch[1];
+                    $.ajax({
+                        type: "POST",
+                        url: "https://www.upoll.in/api/fetch/polls/arb/",
+                        data: {
+                            'pid': selected,
+                        },
+                        success: () => {
+                            var widget = $("[data-widget]");
+                            widget.html("");
+                            widget.css({ 'flex-direction': 'row', 'border': config['border'] ? '1px solid gray' : 'none', 'width': `${config['width']}px`, 'height': `${config['height']}px` });
+                            var pie = $("<div class='pie'></div>");
+                            widget.append(pie);
+                            var p = $("<p class='credit-link'></p>");
+                            var a = $("<a></a>");
+                            a.text(" Pollin");
+                            a.attr("href", "https://www.upoll.in");
+                            var span = $("<span class='credit-text'></span>");
+                            span.text("Powered by");
+                            p.append(span, a);
+
+                            widget.append(p);
+                            fetchResults($);
+                        },
+                        dataType: "text"
+                    });
+                    return;
+                }
+            })
+        });
         choice_List.append(submit_btn);
         widget.append(choice_List);
+
     }
 
-    function init({ width, height, border, type, result }) {
+    function fetchPoll($, eId, type, config) {
+
+
+        var req = new XMLHttpRequest();
+        req.onreadystatechange = () => {
+            if (req.status == 200 && req.readyState == 4) {
+                record = JSON.parse(req.response);
+                type == "result" ? fetchResults($, eId) : initPoll($, config);
+                $("[data-widget]").css({ "background": "none" });
+            }
+        }
+        req.open("GET", "https://www.upoll.in/api/fetch/polls/arb/?pxr=" + eId, true);
+        req.send();
+
+    }
+
+    function init({ e_id, width, height, border, type, result }) {
         var config = {};
         config['width'] = typeof(width) === 'number' ? (width < 600 ? width : WIDTH) : WIDTH;
         config['height'] = typeof(height) === 'number' ? (height < 400 ? height : HEIGHT) : HEIGHT;
@@ -233,13 +308,16 @@
                 var widget = $('[data-widget]');
                 widget.html("");
                 if (type == 'result') {
-                    widget.css({ 'border': config['border'] ? '1px solid gray' : 'none', 'width': `${config['width']}px`, 'height': `${config['height']}px` });
+                    widget.css({ 'border': config['border'] ? '1px solid gray' : 'none', 'width': `${config['width']}px`, 'height': `${config['height']}px`, "position": "relative" });
                     var pie = $("<div class='pie'></div>");
                     widget.append(pie);
-                    fetchResults($);
+                    fetchPoll($, e_id, "result", config);
+
                 } else {
-                    widget.css({ 'height': 'max-content !important', 'align-items': 'start', 'flex-direction': 'column', 'border': config['border'] ? '1px solid gray' : 'none', 'width': `350px`, 'height': `fit-content`, 'position': 'relative', 'margin': 'auto' });
-                    fetchPoll($);
+                    widget.css({ 'height': 'fit-content !important', 'align-items': 'start', 'flex-direction': 'column', 'border': config['border'] ? '1px solid gray' : 'none', 'width': `350px`, 'min-height': `300px`, 'position': 'relative', 'margin': 'auto' });
+                    fetchPoll($, e_id, "poll", config);
+
+
                 }
                 var p = $("<p class='credit-link'></p>");
                 var a = $("<a></a>");
@@ -248,6 +326,7 @@
                 var span = $("<span class='credit-text'></span>");
                 span.text("Powered by");
                 p.append(span, a);
+
                 widget.append(p);
 
             } else {

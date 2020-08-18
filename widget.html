@@ -28,11 +28,16 @@
     <style>
         div[data-widget] {
             height: fit-content !important;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             position: relative;
             justify-content: space-evenly;
-            background: #ffffff;
+            background: url("https://acegif.com/wp-content/uploads/loading-25.gif");
+            background-repeat: no-repeat;
+            background-size: 50px 50px;
+            background-position: center;
+            background-color: transparent;
+            margin: auto;
         }
         
         hr {
@@ -69,7 +74,7 @@
         
         .title {
             font-family: "Nanum Gothic", sans-serif;
-            font-size: 12px;
+            font-size: 14px;
             margin: 10px;
             max-width: 100%;
             font-weight: bold;
@@ -77,12 +82,12 @@
         
         .title-2 {
             font-family: "Nanum Gothic", sans-serif;
-            font-size: 14px;
-            margin: 10px;
+            font-size: 16px;
+            margin: 5px;
             width: 100%;
             justify-self: flex-start;
             max-width: 100%;
-            font-weight: bold;
+            font-weight: bolder;
             float: left;
         }
         
@@ -96,10 +101,11 @@
             width: 12px;
             height: 12px;
             display: block;
-            padding: 5px;
+            padding: 6px;
             box-sizing: border-box;
             margin-right: 5px;
-            border: 1px solid lightgray;
+            border: 1px solid lightslategrey;
+            border-radius: 100%;
         }
         
         .legend ul li {
@@ -107,23 +113,24 @@
             align-items: center;
             font-family: "Nanum Gothic", sans-serif;
             font-weight: lighter;
-            font-size: 12px;
+            font-size: 13px;
             width: max-content;
             max-width: 200px;
             line-height: 1.17em;
+            text-transform: capitalize;
         }
         
         .percentage {
-            font-size: 13px;
+            font-size: 12px;
             color: black;
             box-shadow: 0 0 2px 1px gray;
             position: absolute;
             z-index: 100;
             /* margin: 100px; */
             /* left: 50px; */
-            background: #fff;
+            background: rgba(255, 255, 255, 0.555);
             padding: 7px;
-            border-radius: 45%;
+            border-radius: 15%;
             font-family: 'Recursive', sans-serif;
             /* font-weight: bold; */
             display: none;
@@ -143,7 +150,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            box-shadow: 0px -1px 2px 1px #242121d6;
+            box-shadow: 0px -1px 1px 1px #535151d6;
             transform-origin: bottom right;
             transform: translate(-50%, -50%) rotate( calc((var(--offset) + var(--value))*1deg));
         }
@@ -171,23 +178,29 @@
             text-transform: normal;
             border-radius: 6px;
             border: 1px solid lightgray;
-            background: rgb(252, 251, 253);
+            background: rgb(239, 239, 247);
             list-style: none;
+            font-size: 199px;
         }
         
         .list-group li {
-            background: rgb(255, 255, 255);
+            background: rgb(252, 253, 255);
             border-bottom: 1px solid lightgray;
             margin-bottom: 4px;
             padding: 8px;
             max-width: 250px;
             height: fit-content;
-            font-family: sans-serif;
-            font-size: 12px;
+            font-family: "Nanum Gothic", sans-serif;
+            /* font-family: sans-serif; */
+            font-size: 11px;
+            transition: all .1s ease-in-out;
         }
         
         .list-group li:hover {
-            color: darkblue;
+            cursor: pointer;
+            background: rgb(213, 218, 231);
+            box-shadow: none;
+            border: none;
         }
         
         .list-group li::first-letter {
@@ -207,11 +220,6 @@
             font-weight: bold;
         }
         
-        .list-grid li:hover {
-            border: 1px solid lightgreen;
-            cursor: pointer;
-        }
-        
         .submit-btn {
             width: 265px;
             padding: 5px;
@@ -227,15 +235,17 @@
             background: rgb(2, 101, 134);
             color: #ffffff;
             cursor: pointer;
+            font-weight: bold;
         }
     </style>
     <script>
         window.onload = function() {
             var widget = new myWidget({
+                e_id: "280",
                 width: 500,
                 height: 250,
                 border: true,
-                type: 'poll',
+                type: 'result',
                 result: true,
             });
 
