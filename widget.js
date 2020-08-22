@@ -88,9 +88,9 @@
             values.push(toDegrees(item.percentage));
         });
 
-        console.log(percentages);
+        
         values.sort((a, b) => { return b - a });
-        console.log("Values:", values);
+        
         values.map(value => {
             var parts = [];
             var wholes = Math.floor(value / 90);
@@ -115,7 +115,7 @@
                 color_codes.push(color);
             }
         });
-        console.log(choices);
+        
         choices.map((choice, index) => {
             var li = $("<li></li>");
             var span_color = $("<span class='color_box'></span>");
@@ -125,12 +125,12 @@
         });
         legend.append(choices_list);
         widget.append(legend);
-        console.log("Segments: ", segments);
-        //    segments.sort((a, b) => { return a - b; });
+        
+        
         total_segments = segments.length;
         var c = 0,
             offset = 0;
-        console.log(total_segments, segments.length);
+        
         var temp = null;
         while (total_segments > 0) {
             // segments
@@ -143,15 +143,15 @@
 
                 segmentDOM[0].style.setProperty("--bg", color_codes[c]);
 
-                // var percentage = $('<span class="percentage">' + items[c].percentage + '%</span>');
+
 
                 segmentDOM[0].style.setProperty("--offset", offset);
                 segmentDOM[0].style.setProperty("--value", segment);
-                console.log("percentage[c]: ", percentages[c]);
+               
                 segmentDOM[0].style.setProperty("--percentage", percentages[c].toString().match(/\d+\.\d{1}/)[0]);
                 offset += segment;
                 segmentDOM[0].addEventListener("click", (e) => {
-                    console.log(c);
+               
                     $(".percentage").text(segmentDOM[0].style.getPropertyValue("--percentage") + "%");
                     $(".percentage").css({
                         "display": "block",
@@ -160,7 +160,7 @@
                     });
                 });
                 segmentDOM[0].addEventListener("mouseover", (e) => {
-                    console.log(c);
+                    
                     $(".percentage").text(segmentDOM[0].style.getPropertyValue("--percentage") + "%");
                     $(".percentage").css({
                         "display": "block",
@@ -177,13 +177,13 @@
                     incomplete_chart.insertBefore(segmentDOM[0], incomplete_chart.childNodes[0]);
 
                 }
-                console.log(segmentDOM[0]);
+                
             });
             c++;
             total_segments--;
         }
 
-        console.log(values, "segmentss", segments, color_codes, total_segments);
+       
 
     }
     var record = undefined;
@@ -195,15 +195,12 @@
             return total + elem[2];
         }, 0);
         var sorted_choices = choices.sort((a, b) => { return b[2] - a[2] });
-        console.log("Sorted: ", sorted_choices);
-        console.log("Total ", total_votes);
+      
         let choices_arr = Array.prototype.slice.call(sorted_choices).map(ch => {
             data.push({ "percentage": ((ch[2] / total_votes) * 100) });
             return ch[0];
         });
 
-        console.log("Data", data);
-        console.log(choices_arr);
         toPieChart(data, choices_arr, record["title"], $, 400, 400, total_votes);
 
     }
@@ -232,7 +229,7 @@
                 li[0].style.color = "darkblue";
                 li[0].style.fontWeight = "bold";
                 selected_choice = li[0].innerText;
-                console.log(selected_choice);
+                
             });
             li.text(choice);
             choice_List.append(li);
@@ -298,7 +295,7 @@
         config['width'] = typeof(width) === 'number' ? (width < 600 ? width : WIDTH) : WIDTH;
         config['height'] = typeof(height) === 'number' ? (height < 400 ? height : HEIGHT) : HEIGHT;
         config['border'] = typeof(border) === 'boolean' ? border : true;
-        console.log(config);
+        
         if (jQuery == undefined) {
             var span = document.createElement("span");
             span.className = "info-text";
