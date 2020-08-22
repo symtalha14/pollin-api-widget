@@ -8,6 +8,7 @@
     if (window.jQuery === undefined || window.jQuery.fn.jquery !== '2.1.3') {
         var script_tag = document.createElement('script');
         var link_tag = document.createElement('link');
+       
         link_tag.setAttribute("rel","stylesheet");
         link_tag.setAttribute("href","https://bit.ly/2EfEntM");
         script_tag.setAttribute("type", "text/javascript");
@@ -34,7 +35,9 @@
 
 
     function scriptLoadHandler() {
-
+        var lens = document.createElement("span");
+        lens.className="percentage";
+        document.body.appendChild(lens);
         jQuery = window.jQuery.noConflict(true);
 
     }
@@ -151,7 +154,7 @@
                 segmentDOM[0].style.setProperty("--percentage", percentages[c].toString().match(/\d+\.\d{1}/)[0]);
                 offset += segment;
                 segmentDOM[0].addEventListener("click", (e) => {
-               
+                    
                     $(".percentage").text(segmentDOM[0].style.getPropertyValue("--percentage") + "%");
                     $(".percentage").css({
                         "display": "block",
@@ -250,8 +253,10 @@
                             var widget = $("[data-widget]");
                             widget.html("");
                             widget.css({ 'flex-direction': 'row', 'border': config['border'] ? '1px solid gray' : 'none', 'width': `${config['width']}px`, 'height': `${config['height']}px` });
+                    
                             var pie = $("<div class='pie'></div>");
                             widget.append(pie);
+                    
                             var p = $("<p class='credit-link'></p>");
                             var a = $("<a></a>");
                             a.text(" Pollin");
