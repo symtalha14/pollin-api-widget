@@ -7,6 +7,9 @@
     var jQuery;
     if (window.jQuery === undefined || window.jQuery.fn.jquery !== '2.1.3') {
         var script_tag = document.createElement('script');
+        var link_tag = document.createElement('link');
+        link_tag.setAttribute("rel","stylesheet");
+        link_tag.setAttribute("href","./style.css");
         script_tag.setAttribute("type", "text/javascript");
         script_tag.setAttribute("src",
             "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js");
@@ -22,6 +25,7 @@
         // window.jQuery = "1.4.2";
 
         (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(script_tag);
+        (document.getElementsByTagName("head")[0] || document.documentElement).appendChild(link_tag);
     } else {
 
         jQuery = window.jQuery;
