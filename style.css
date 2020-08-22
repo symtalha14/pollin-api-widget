@@ -7,8 +7,9 @@ POLLIN API WIDGET BASIC STYLING
 */
 
 div[data-widget] {
-    height: fit-content !important;
-    padding: 10px;
+    height: max-content !important;
+    padding: 9px;
+    width:max-content;
     display: flex;
     position: relative;
     justify-content: space-evenly;
@@ -53,7 +54,7 @@ hr {
 }
 
 .title {
-    font-family: "Nanum Gothic", sans-serif;
+    font-family: "Nanum Gothic", sans-serif ;
     font-size: 14px;
     margin: 10px;
     max-width: 100%;
@@ -216,4 +217,10 @@ hr {
     color: #ffffff;
     cursor: pointer;
     font-weight: bold;
+}
+
+@media only screen and (max-width:786px){
+    div[data-widget] {
+        width:auto !important;
+    }
 }
