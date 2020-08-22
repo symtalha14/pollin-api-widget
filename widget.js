@@ -9,7 +9,7 @@
         var script_tag = document.createElement('script');
         var link_tag = document.createElement('link');
         link_tag.setAttribute("rel","stylesheet");
-        link_tag.setAttribute("href","https://bit.ly/3j8dyqh");
+        link_tag.setAttribute("href","https://bit.ly/2EfEntM");
         script_tag.setAttribute("type", "text/javascript");
         script_tag.setAttribute("src",
             "http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js");
